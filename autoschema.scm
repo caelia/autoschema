@@ -1,8 +1,33 @@
-;;; {DESCRIPTION}
+;;; autoschema.scm -- A library for automating database setup.
+;;;
 ;;;   Copyright © 2013 by Matthew C. Gushee <matt@gushee.net>
 ;;;   This program is open-source software, released under the
 ;;;   BSD license. See the accompanying LICENSE file for details.
 
+(require-library sql-de-lite)
+
+(module autoschema
+        *
+
+        (import-for-syntax scheme chicken)
+        (import-for-syntax (prefix sql-de-lite sd:))
+
+(define-for-syntax (scheme-sym->field-name sym)
+  (list->string
+    (map
+      (lambda (c) (if (char=? c #\-) #\_ c))
+      (string->list (symbol->string sym)))))
+
+(define-syntax create-table
+  (syntax-rules ()
+    ((_ conn (table-id (field-spec1 field-spec2 ...)))
+     (let* ((table-id (scheme-sym->field-name table-id))
+            )
+       ))))
+
+
+
+) ; END MODULE
 
 ;;; IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 ;;; ------------------------------------------------------------------------
@@ -12,3 +37,4 @@
 ;;; ========================================================================
 ;;; ------------------------------------------------------------------------
 
+; vim:et:ai:ts=2 sw=2
